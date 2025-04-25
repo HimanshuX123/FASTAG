@@ -1,0 +1,294 @@
+/* Light-Dark Theme */
+body {
+    background-color: #181818;
+    font-family: 'Poppins', sans-serif;
+    color: #f5f5f5;
+    padding: 20px;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #222;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(50, 205, 50, 0.3); /* Subtle green glow */
+}
+
+/* Alternating row colors for readability */
+tbody tr:nth-child(odd) {
+    background-color: #252525;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #2d2d2d;
+}
+
+/* Table Headers */
+th {
+    background-color: #1e581e;
+    color: #fff;
+    padding: 14px;
+    text-align: left;
+    font-size: 16px;
+}
+
+/* Table Rows */
+td {
+    padding: 12px;
+    border-bottom: 1px solid #333;
+}
+
+/* Hover Effect */
+tbody tr:hover {
+    background-color: #1f7a1f;
+    transition: 0.3s ease-in-out;
+}
+
+/* QR Code Styling */
+td img {
+    width: 70px;
+    height: 70px;
+    border-radius: 8px;
+    border: 2px solid #2ecc71;
+}
+
+/* Transaction History Styling */
+.transaction-history {
+    background: #202a20;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+    animation: fadeIn 0.5s ease-in-out;
+    box-shadow: 0 4px 12px rgba(50, 205, 50, 0.3);
+}
+
+/* Transaction Row Highlighting */
+.transaction-history ul li {
+    list-style: none;
+    padding: 10px 12px;
+    margin: 5px 0;
+    border-left: 5px solid;
+    font-size: 15px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+}
+
+/* Different Colors for Transaction Status */
+.status.Completed {
+    color: #2ecc71;
+    border-left: 5px solid #2ecc71;
+    padding-left: 10px;
+    animation: transactionGlow 1.5s infinite alternate;
+}
+
+.status.Pending {
+    color: #f1c40f;
+    border-left: 5px solid #f1c40f;
+    padding-left: 10px;
+}
+
+/* Hover Effect on Transactions */
+.transaction-history ul li:hover {
+    background: #274d27;
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(39, 174, 96, 0.4);
+}
+
+/* Logout Button */
+.logout-btn {
+    background: #27ae60;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 6px;
+    display: inline-block;
+    margin-bottom: 15px;
+    transition: background 0.3s, transform 0.3s;
+}
+
+.logout-btn:hover {
+    background: #219150;
+    transform: scale(1.05);
+}
+
+/* View Document Button */
+.view-btn {
+    background: #141414;
+    color: white;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    border: none;
+    padding: 8px 15px;
+    transition: background 0.3s ease-in-out;
+}
+
+.view-btn:hover {
+    background: #3498db;
+}
+
+/* FontAwesome Icon Styling */
+.view-btn i {
+    font-size: 14px;
+}
+
+/* Search Bar */
+.search-container {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#searchInput {
+    width: 45%;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    background: #2a552a;
+    color: #fff;
+    text-align: center;
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+#searchInput:focus {
+    background: #3a3a3a;
+    box-shadow: 0 0 10px rgba(39, 174, 96, 0.5);
+}
+
+/* Action Buttons */
+.edit-btn, .delete-btn {
+    padding: 8px 15px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.3s, background 0.3s;
+}
+
+.edit-btn {
+    background: #27ae60;
+    color: white;
+    border: none;
+}
+
+.edit-btn:hover {
+    background: #219150;
+    transform: scale(1.05);
+}
+
+.delete-btn {
+    background: #e74c3c;
+    color: white;
+    border: none;
+}
+
+.delete-btn:hover {
+    background: #c0392b;
+    transform: scale(1.05);
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+/* Transaction Pop Animation */
+@keyframes transactionPop {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    60% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Updated Transaction Row Styling */
+.transaction-history ul li {
+    list-style: none;
+    padding: 12px 14px;
+    margin: 5px 0;
+    border-left: 5px solid;
+    font-size: 15px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #252525;
+    border-radius: 5px;
+    transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+    animation: transactionPop 0.5s ease-in-out;
+}
+/* Transaction Pop Animation */
+@keyframes transactionPop {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    60% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Apply Animation to Transaction Rows */
+.transaction-row ul li {
+    list-style: none;
+    padding: 12px 14px;
+    margin: 5px 0;
+    border-left: 5px solid;
+    font-size: 15px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #252525;
+    border-radius: 5px;
+    transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+    opacity: 0; /* Initially hidden */
+}
+
+/* Glow Effect for Completed Transactions */
+@keyframes transactionGlow {
+    0% {
+        box-shadow: 0 0 10px rgba(39, 174, 96, 0.3);
+    }
+    100% {
+        box-shadow: 0 0 15px rgba(39, 174, 96, 0.6);
+    }
+}
+
+/* Transaction Status Styles */
+.status.Completed {
+    color: #2ecc71;
+    border-left: 5px solid #2ecc71;
+    padding-left: 10px;
+    animation: transactionGlow 1.5s infinite alternate;
+}
+
+.status.Pending {
+    color: #f1c40f;
+    border-left: 5px solid #f1c40f;
+    padding-left: 10px;
+}
+
+/* Hover Effect on Transactions */
+.transaction-row ul li:hover {
+    background: #1f7a1f;
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(39, 174, 96, 0.5);
+}

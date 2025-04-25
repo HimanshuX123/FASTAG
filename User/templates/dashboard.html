@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        /* Animated Background */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -50px;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: rise 10s infinite ease-in-out;
+        }
+
+        @keyframes rise {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            width: 450px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+            transition: 0.3s ease-in-out;
+            position: relative;
+            z-index: 2;
+        }
+
+        .container:hover {
+            transform: scale(1.02);
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+
+        .fas {
+            margin-right: 8px;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(90deg, #23a2f6, #1845ad);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            margin-top: 15px;
+            transition: 0.3s ease-in-out;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: linear-gradient(90deg, #1845ad, #23a2f6);
+            transform: scale(1.05);
+        }
+
+        .logout-btn {
+            background: linear-gradient(90deg, #ff4b2b, #ff416c);
+        }
+
+        .logout-btn:hover {
+            background: linear-gradient(90deg, #ff416c, #ff4b2b);
+        }
+
+        .profile-btn {
+            background: linear-gradient(90deg, #fcb045, #fd1d1d);
+        }
+
+        .profile-btn:hover {
+            background: linear-gradient(90deg, #fd1d1d, #fcb045);
+        }
+
+        .update-btn {
+            background: linear-gradient(90deg, #36d1dc, #5b86e5);
+        }
+
+        .update-btn:hover {
+            background: linear-gradient(90deg, #5b86e5, #36d1dc);
+        }
+
+        .balance {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .balance span {
+            color: #23a2f6;
+        }
+
+        .footer {
+            margin-top: 15px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Animated Background -->
+    <div class="background">
+        <!-- Creating 20 bubbles dynamically -->
+        <script>
+            for (let i = 0; i < 20; i++) {
+                let bubble = document.createElement("div");
+                bubble.classList.add("bubble");
+                bubble.style.left = `${Math.random() * 100}vw`;
+                bubble.style.width = `${Math.random() * 10 + 10}px`;
+                bubble.style.height = bubble.style.width;
+                bubble.style.animationDuration = `${Math.random() * 5 + 5}s`;
+                document.querySelector(".background").appendChild(bubble);
+            }
+        </script>
+    </div>
+
+  <div class="container">
+    <h1>Welcome, {% if user %}{{ user.first_name }}{% else %}User{% endif %}! <i class="fas fa-user-circle"></i></h1>
+    <p>Your FasTag account is active.</p>
+
+    {% if is_registered %}
+
+        <a href="{% url 'profile' user.id %}" class="btn profile-btn"><i class="fas fa-user"></i> View Profile</a>
+        <a href="{% url 'update_profile' %}" class="btn update-btn"><i class="fas fa-edit"></i> Update Profile</a>
+    {% else %}
+        <p class="warning">You need to register for FasTag first.</p>
+    {% endif %}
+
+    <a href="{% url 'register' %}" class="btn"><i class="fas fa-id-card"></i> Register for FasTag</a>
+    <a href="{% url 'logout' %}" class="btn logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+
+    <p class="footer">&copy; 2025 FasTag System | All Rights Reserved</p>
+</div>
+
+</body>
+</html>

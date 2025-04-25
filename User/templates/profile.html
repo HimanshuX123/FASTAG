@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: Arial, sans-serif;
+        }
+        .dashboard {
+            display: flex;
+            height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #1e1e2f;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .sidebar a {
+            text-decoration: none;
+            color: white;
+            padding: 12px;
+            width: 100%;
+            text-align: center;
+            display: block;
+            border-radius: 5px;
+            margin: 5px 0;
+            transition: 0.3s ease-in-out;
+        }
+        .sidebar a:hover {
+            background-color: #00bcd4;
+            transform: scale(1.05);
+        }
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+        }
+        .card {
+            background-color: #1e1e2f;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .profile-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* Space between elements */
+}
+
+.profile-picture-label {
+    display: block;
+    cursor: pointer;
+}
+
+.profile-img {
+    width: 150px;  /* Increased size */
+    height: 150px; /* Increased size */
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.file-input {
+    display: block;
+    width: 80%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #f8f9fa;
+}
+
+.upload-btn {
+    width: 80%;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.upload-btn:hover {
+    background-color: #0056b3;
+}
+
+        .qr-container img {
+            width: 150px;
+            border: 3px solid #00bcd4;
+            border-radius: 10px;
+            padding: 5px;
+        }
+        .btn-custom {
+            background-color: #00bcd4;
+            border: none;
+            padding: 10px 20px;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        .btn-custom:hover {
+            background-color: #0193a5;
+        }
+        .btn-danger {
+            background-color: #ff5722;
+            border: none;
+        }
+        .btn-danger:hover {
+            background-color: #d84315;
+        }
+        .profile-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+        .profile-label {
+            font-weight: bold;
+            color: #f8c291;
+        }
+        .profile-info {
+            color: #ffffff;
+        }
+        .transactions {
+    background: #1e1e2f;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.transactions h3 {
+    color: #fff;
+    font-size: 18px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.transactions ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.transactions li {
+    background: #292940;
+    color: #ddd;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+}
+
+.transactions .status {
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+/* Status Colors */
+.transactions .status.success {
+    color: #00ff88;
+}
+
+.transactions .status.failed {
+    color: #ff4c4c;
+}
+
+.transactions .status.pending {
+    color: #ffcc00;
+}
+
+.no-transactions {
+    color: #ccc;
+    text-align: center;
+    font-style: italic;
+    padding: 10px;
+}
+
+    </style>
+</head>
+<body>
+
+<div class="dashboard">
+    <!-- Sidebar -->
+    <div class="sidebar">
+ <form method="post" action="{% url 'upload_profile_picture' %}" enctype="multipart/form-data" class="profile-form">
+    {% csrf_token %}
+
+    <label for="profile_picture" class="profile-picture-label">
+        {% if user.profile_picture %}
+            <img src="{{ user.profile_picture.url }}" alt="User" class="profile-img">
+        {% else %}
+            <img src="https://via.placeholder.com/150" alt="Default Profile" class="profile-img">
+        {% endif %}
+    </label>
+
+    <input type="file" name="profile_picture" id="profile_picture" class="form-control file-input">
+
+    <button type="submit" class="btn btn-custom upload-btn">Upload</button>
+</form>
+
+<a href="javascript:history.back()" class="btn" style="background: #444;">⬅ Go Back</a>
+
+
+        <h4 class="profile-title">{{ user.first_name }} {{ user.last_name }}</h4>
+        <p class="text-info">🚗 {{ user.vehicle_name }}</p>
+        <a href="{% url 'logout' %}" class="btn btn-danger">🚪 Logout</a>
+
+        <div class="card mt-4">
+            <h4 class="profile-title">Uploaded Documents</h4>
+            <ul class="list-group">
+                {% if user.rc_copy %}
+                    <li class="list-group-item bg-dark text-white">
+                        🚘 <strong>RC Copy:</strong>
+                        <a href="{{ user.rc_copy.url }}" target="_blank" class="text-info">View</a>
+                    </li>
+                {% endif %}
+                {% if user.id_proof_upload %}
+                    <li class="list-group-item bg-dark text-white">
+                        🆔 <strong>ID Proof:</strong>
+                        <a href="{{ user.id_proof_upload.url }}" target="_blank" class="text-info">View</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <h2 class="mb-4 profile-title">User Profile</h2>
+
+        <div class="card mb-4">
+            <h4 class="profile-title">Profile Details</h4>
+            <p><span class="profile-label">📞 Mobile:</span> <span class="profile-info">{{ user.mobile }}</span></p>
+            <p><span class="profile-label">📧 Email:</span> <span class="profile-info">{{ user.email }}</span></p>
+            <p><span class="profile-label">🚗 Vehicle Number:</span> <span class="profile-info">{{ user.vehicle_number }}</span></p>
+            <p><span class="profile-label">💰 FasTag Balance:</span> <span class="profile-info">₹{{ user.balance }}</span></p>
+            <p><span class="profile-label">🗓 Registration Date:</span> <span class="profile-info">{{ user.created_at }}</span></p>
+        </div>
+
+        {% if user.qr_code %}
+        <div class="card text-center">
+            <h4 class="profile-title">Your FasTag QR Code</h4>
+            <div class="qr-container">
+               <img src="{% url 'generate_qr' user.id %}" alt="User QR Code" class="qr-image">
+            </div>
+        </div>
+
+
+
+
+
+
+        {% endif %}
+<div class="card mt-4">
+    <h4 class="profile-title">Recharge Your FasTag</h4>
+    <form method="post" action="{% url 'make_payment' %}">
+        {% csrf_token %}
+        <!-- Hidden field for user_id -->
+        <input type="hidden" name="user_id" value="{{ request.user.id }}">
+
+        <label for="amount" class="profile-label">Enter Amount (₹):</label>
+        <input type="number" name="amount" min="1" class="form-control mb-2" required>
+
+        <button type="submit" class="btn btn-custom">Recharge Now</button>
+    </form>
+</div>
+
+
+
+       <!-- Transaction History -->
+
+          <div class="transactions">
+    <h3>Transaction History</h3>
+    {% if transactions %}
+    <ul>
+        {% for transaction in transactions %}
+        <li>
+            ₹{{ transaction.amount }} -
+            <span class="status {{ transaction.payment_status }}">{{ transaction.payment_status }}</span> -
+            {{ transaction.created_at|date:"F d, Y, h:i A" }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="no-transactions">No transactions found.</p>
+    {% endif %}
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,154 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <h2>Admin Dashboard</h2>
+
+        <!-- Logout Button -->
+        <a href="{% url 'logout' %}" class="logout-btn">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+
+        <!-- Search Filter -->
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search by Name or Vehicle Number...">
+        </div>
+
+        <table id="userTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Vehicle</th>
+             >
+                    <th>ID PROOF</th>
+                    <th>RC Document</th>
+                    <th>QR Code</th>
+                    <th>Balance</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr class="user-row">
+                    <td>{{ user.first_name }} {{ user.last_name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.mobile }}</td>
+                    <td>{{ user.vehicle_number }}</td>
+
+    <td>
+    <a href="{{ user.id_proof_upload.url }}" target="_blank" class="view-btn">
+        <i class="fas fa-file"></i> View ID Proof
+    </a>
+</td>
+
+<td>
+    <a href="{{ user.rc_copy.url }}" target="_blank" class="view-btn">
+        <i class="fas fa-file"></i> View RC Copy
+    </a>
+</td>
+
+                    <td>
+                        <img src="{{ user.qr_code.url }}" alt="QR Code">
+                    </td>
+                    <td>₹{{ user.balance }}</td>
+                    <td>
+                        <button class="edit-btn" onclick="editUser('{{ user.id }}')">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                        <button class="delete-btn" onclick="deleteUser('{{ user.id }}')">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </td>
+                </tr>
+
+                <!-- Transaction History Row -->
+                <tr class="transaction-row">
+                    <td colspan="10">
+
+                            <h3>Transaction History</h3>
+                            {% if user.transactions %}
+                            <ul>
+                                {% for transaction in user.transactions %}
+                                <li>
+                                    ₹{{ transaction.amount }} -
+                                    <span class="status {{ transaction.payment_status }}">{{ transaction.payment_status }}</span> -
+                                    {{ transaction.created_at|date:"F d, Y, h:i A" }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            {% else %}
+                            <p class="no-transactions">No transactions found.</p>
+                            {% endif %}
+
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- JavaScript for Search Filter -->
+    <script>
+        document.getElementById('searchInput').addEventListener('keyup', function () {
+            let filter = this.value.toLowerCase();
+            let rows = document.querySelectorAll('.user-row');
+
+            rows.forEach(row => {
+                let name = row.cells[0].textContent.toLowerCase();
+                let vehicle = row.cells[3].textContent.toLowerCase();
+
+                if (name.includes(filter) || vehicle.includes(filter)) {
+                    row.style.display = "";
+                    row.nextElementSibling.style.display = ""; // Show the transaction row
+                } else {
+                    row.style.display = "none";
+                    row.nextElementSibling.style.display = "none"; // Hide the transaction row
+                }
+            });
+        });
+
+     function editUser(userId) {
+    window.location.href = `/edit-user/${userId}/`;  // Use hyphen (-) instead of underscore (_)
+}
+
+
+
+        function deleteUser(userId) {
+            if (confirm("Are you sure you want to delete this user?")) {
+                alert("User Deleted: " + userId);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+    const transactionItems = document.querySelectorAll(".transaction-row ul li");
+
+    transactionItems.forEach((item, index) => {
+        setTimeout(() => {
+            item.style.opacity = "1";
+            item.style.animation = "transactionPop 0.5s ease-in-out forwards";
+        }, index * 100); // Delay for smooth pop effect
+    });
+});
+
+    </script>
+
+</body>
+</html>

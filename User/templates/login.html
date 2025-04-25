@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .background {
+            position: absolute;
+            width: 450px;
+            height: 550px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        form {
+            width: 100%;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h3 {
+            font-size: 28px;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        label {
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 500;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        input {
+            width: 100%;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            padding: 10px;
+            color: #ffffff;
+            font-size: 14px;
+            transition: 0.3s ease;
+        }
+
+        input:focus {
+            background: rgba(255, 255, 255, 0.25);
+            border: 1px solid #23a2f6;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(90deg, #23a2f6, #1845ad);
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+            margin-top: 30px;
+        }
+
+        button:hover {
+            background: linear-gradient(90deg, #1845ad, #23a2f6);
+            transform: scale(1.05);
+        }
+
+        .social {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .social div {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            flex: 1;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+.admin-btn {
+    display: block;
+    text-align: center;
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(90deg, #ff416c, #ff4b2b);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    margin-top: 20px;
+    transition: 0.3s ease-in-out;
+}
+
+.admin-btn:hover {
+    background: linear-gradient(90deg, #ff4b2b, #ff416c);
+    transform: scale(1.05);
+}
+
+        .social div:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .social i {
+            margin-right: 8px;
+        }
+
+        .social .fb {
+            margin-left: 15px;
+        }
+
+        a {
+            color: #23a2f6;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: 0.3s ease-in-out;
+        }
+
+        a:hover {
+            color: #ffffff;
+        }
+
+        @media (max-width: 480px) {
+            .background {
+                width: 90%;
+                height: auto;
+                padding: 20px;
+            }
+        }
+        .home-btn {
+    display: block;
+    text-align: center;
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(90deg, #36d1dc, #5b86e5);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    margin-top: 20px;
+    transition: 0.3s ease-in-out;
+}
+
+.home-btn:hover {
+    background: linear-gradient(90deg, #5b86e5, #36d1dc);
+    transform: scale(1.05);
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="background">
+        <form method="post">
+            <h3>Login Here</h3>
+            {% csrf_token %}
+            <label for="username">Username</label>
+            <input type="text" placeholder="Enter Username" id="username" name="username" required>
+
+            <label for="password">Password</label>
+            <input type="password" placeholder="Enter Password" id="password" name="pass" required>
+
+            <button type="submit">Log In</button>
+
+            <div class="social">
+                <div class="go"><i class="fab fa-google"></i> Google</div>
+                <div class="fb"><i class="fab fa-facebook"></i> Facebook</div>
+            </div>
+
+          <a href="{% url 'home' %}" class="home-btn">Home Page</a>
+<a href="{% url 'signup' %}">Create an account</a>
+<a href="{% url 'admin_login' %}" class="admin-btn">Admin Login</a>
+
+
+        </form>
+    </div>
+
+</body>
+</html>
